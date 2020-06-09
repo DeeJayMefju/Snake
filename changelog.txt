@@ -1,0 +1,9 @@
+Changelog Snake v1.1
+Wprowadzone zmiany:
+1. Nazwy zmiennych zgodnie z konwencją
+2. Scalenie metod setGolden, setGreen, setHelmet
+   w jedną metodę setBonus(x, y, bonusType)
+3. Usunięcie switcha w EventThread i wykorzystanie 
+   setBonus z wylosowanym parametrem
+4. Uzupełnienie dokumentacji (opisy klas i niektórych metod)
+ 

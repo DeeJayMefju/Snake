@@ -7,15 +7,15 @@ import java.io.IOException;
 
 
 /**
- * Nagłówek interfejsu
+ * Custom header to display the game title
  */
 public class UIHeader extends JLabel {
 
     /**
-     * Ustawienie parametrow wygladu naglowkow
+     * Creates new instance of UIHeader and sets its visual properties
      *
-     * @param text tekst naglowka
-     * @param size rozmiar czcionki naglowka
+     * @param text header text
+     * @param size font size
      */
     public UIHeader(String text, int size) {
 

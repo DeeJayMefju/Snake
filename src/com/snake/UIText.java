@@ -6,15 +6,15 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Tekst sformatowany
+ * Custom formatted text
  */
 public class UIText extends JLabel {
 
     /**
-     * Ustawienie parametrow wygladu tekstu
+     * Sets visual parameters of the text
      *
-     * @param text tekst
-     * @param size rozmiar czcionki
+     * @param text text to display
+     * @param size font size
      */
     public UIText(String text, int size) {
         setText(text);

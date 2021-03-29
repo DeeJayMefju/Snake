@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 /**
- * Zestawienie najlepszych wyników
+ * Set of the high scores
  */
 public class Score extends JScrollPane {
     private static final String[] naglowki = {"Imię", "Punkty", "Poziom"};
@@ -21,8 +21,7 @@ public class Score extends JScrollPane {
     private static JTable tabela = new JTable(wyniki, naglowki);
 
     /**
-     * Tworzy zestawienie najlepszych wyników graczy, aktualizacja tablicy z wynikami
-     * i tabeli, ustawienie parametrow
+     * Creates instance of high score, updates the high score table, sets visual properties of table.
      */
     public Score() {
         updateArray();
@@ -116,11 +115,11 @@ public class Score extends JScrollPane {
     }
 
     /**
-     * Dodanie wyniku to tabeli wynikow
+     * Adds new score to the High Score table
      *
-     * @param name  imie gracza
-     * @param score wynik gracza
-     * @param diff  poziom trudnosci
+     * @param name  player's name
+     * @param score player's score
+     * @param diff  difficulty level
      */
     public void addScore(String name, int score, int diff) {
         FileWriter fw = null;

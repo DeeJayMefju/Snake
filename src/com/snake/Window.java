@@ -6,17 +6,17 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Okno menu
+ * Menu window
  */
 public class Window extends JFrame {
 
     private final JPanel mainPanel = new JPanel();
 
     /**
-     * Ustawienie parametrow wygladu okna menu
+     * Sets menu window size and style
      *
-     * @param width  szerokosc
-     * @param height wysokosc
+     * @param width  menu window width
+     * @param height menu window height
      */
     public Window(int width, int height) {
         try {
@@ -37,9 +37,9 @@ public class Window extends JFrame {
     }
 
     /**
-     * Metoda zwraca glowny panel okna
+     * returns the main panel of menu window
      *
-     * @return glowny panel
+     * @return main panel
      */
     public JPanel getPane() {
         return mainPanel;

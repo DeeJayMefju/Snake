@@ -6,15 +6,15 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Przycisk interfejsu
+ * Custom button
  */
 public class UIButton extends JButton {
     /**
-     * Ustawienie parametrow wygladu przycisku
+     * Creates new UIButton and sets its visual properties
      *
-     * @param text tekst na przycisku
-     * @param w    szerokosc
-     * @param h    wysokosc
+     * @param text text to display on the button
+     * @param w    width
+     * @param h    height
      */
     public UIButton(String text, int w, int h) {
         setText(text);

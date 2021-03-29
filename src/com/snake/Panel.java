@@ -9,7 +9,7 @@ import java.io.IOException;
 
 
 /**
- * Panel stanu gry
+ * Game state panel
  */
 public class Panel extends JComponent implements ActionListener {
     private static int score, time = 0;
@@ -18,17 +18,16 @@ public class Panel extends JComponent implements ActionListener {
     private static String diff;
 
     /**
-     * W konstruktorze panelu stanu gry ustawiany jest
-     * atrybut przechowujacy plansze gry.
+     * Creates new instance of Panel, sets the board field to an existing board
      *
-     * @param b plansza
+     * @param b board
      */
     public Panel(Board b) {
         board = b;
     }
 
     /**
-     * Zatrzymanie aktualizowania stanu i ustawienie timera od nowa
+     * Stops updating the game state and resets the timer
      */
     public void set() {
         if (seconds != null && seconds.isRunning()) seconds.stop();
@@ -37,7 +36,7 @@ public class Panel extends JComponent implements ActionListener {
     }
 
     /**
-     * Reset do stanu poczatkowego
+     * Resets state to initial values
      */
     public void reset() {
         time = 0;
@@ -48,16 +47,16 @@ public class Panel extends JComponent implements ActionListener {
     }
 
     /**
-     * Uruchomienie aktualizacji stanu
+     * Starts the state updating
      */
     public void start() {
         if (!seconds.isRunning()) seconds.start();
     }
 
     /**
-     * metoda odmalowania panelu
+     * Repaints the panel
      *
-     * @param g2 srodowisko graficzne
+     * @param g2 graphical 2D environment
      */
     @Override
     protected void paintComponent(Graphics g2) {
@@ -76,11 +75,10 @@ public class Panel extends JComponent implements ActionListener {
     }
 
     /**
-     * Metoda wywolywana z kazdym tickiem timera czyli co sekunde.
-     * Powoduje pobranie stanu gry z planszy, dodanie jednej sekundy
-     * i odmalowanie panelu.
+     * Fired every second, gets game state from the board, adds one second to counter and
+     * repaints the panel.
      *
-     * @param actionEvent zdarzenie (tick timera)
+     * @param actionEvent timer tick event
      */
     @Override
     public void actionPerformed(ActionEvent actionEvent) {

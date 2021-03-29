@@ -8,16 +8,11 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * <h1>Silnik gry</h1>
- * <h2>Główna klasa zarządzająca interfejsem, oknami, akcjami przycisków.</h2>
- * Gra zrecznościowa polegajaca na sterowaniu wezem
- * tak, by nie uderzyc w sciane ani w przeszkoe
- * (jesli sa wlaczone) jednoczesnie zbierajac jak
- * najwiecej jablek (zlote = 3pkt, czerwone = 1pkt,
- * zielone przyspiesza, kask pozwala rozbic jedna przeszkode
+ * <h1>Game Engine</h1>
+ * Main class managing UI, windows, button actions etc
  *
  * @author Mateusz Kędzierski
- * @version 1.1
+ * @version 1.2
  * @since 2020-06-08
  */
 public class GameEngine implements ActionListener {
@@ -63,9 +58,7 @@ public class GameEngine implements ActionListener {
 
 
     /**
-     * Konstruktor klasy GameEngine wywoluje funkcje inicjalizujace
-     * wszystkie elementy interfejsu graficznego: menu, okno wyboru poziomu
-     * trudnosci, okno pomocy, okno wynikow, glowne okno gry, przyciski itp
+     * Creates new instance of GameEngine, initializes UI elements
      */
     public GameEngine() {
         SwingUtilities.invokeLater(() -> {
@@ -104,9 +97,9 @@ public class GameEngine implements ActionListener {
     }
 
     /**
-     * Metoda main powoluje instancje silnika gry GameEngine
+     * Starts the app and creates GameEngine
      *
-     * @param args Nieuzywane.
+     * @param args application launch arguments
      */
     public static void main(String[] args) {
         new GameEngine();
@@ -308,15 +301,9 @@ public class GameEngine implements ActionListener {
     }
 
     /**
-     * Metoda wywoływana w momencie wcisniecia ktoregos z przyciskow
-     * interfejsu graficznego. Obsluguje kazdy przycisk z kazdego okna.
-     * Rozpoczyna nowa gre w zaleznosci od wybranego poziomu trudnosci
-     * i zaznaczonych opcji gry. Dodatkowo zmienia napis na przycisku
-     * z PAUSE na RESUME i odwrotnie. Przycisk zamkniecia okna
-     * Game Over powoduje dodanie wyniku do tabeli wynikow, jesli podane
-     * przez gracza imie jest poprawnym ciagiem znakow
+     * Handles UI action events from every window, including starting the game, changing difficulty level etc.
      *
-     * @param e obslugiwane zdarzenie pochodzace od przycisku
+     * @param e action event responsible for different buttons
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -411,12 +398,10 @@ public class GameEngine implements ActionListener {
     }
 
     /**
-     * Metoda wyswietla okno Game Over. Jest wywolywana posrednio
-     * przez obiekt planszy. Wypisuje odpowiedni komunikat odpowiadajacy
-     * przyczynie smierci weza i wynik osiagniety przez gracza.
+     * Shows Game Over window. Prints message about the cause of death and gained score.
      *
-     * @param score wynik
-     * @param way   sposob smierci
+     * @param score player's score
+     * @param way   death cause
      */
     public void showGameOver(int score, int way) {
         String[] over = {

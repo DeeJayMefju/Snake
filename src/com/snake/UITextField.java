@@ -6,11 +6,11 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Pole tekstowe
+ * Custom text field
  */
 public class UITextField extends JTextField {
     /**
-     * Ustawienie parametrow wygladu pola tekstowego
+     * Creates new UITextField and sets view properties
      */
     public UITextField() {
         setMaximumSize(new Dimension(250, 50));

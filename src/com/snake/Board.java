@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Obiekt klasy Board odpowiada za plansze, ale takze za
- * przebieg rozgrywki, animacje zwiazane z rozgrywka i
- * mechanizm gry.
+ * Board object is responsible for the board but also the game state, animations and some game mechanics
  */
 public class Board extends JPanel implements ActionListener {
 
@@ -22,8 +20,8 @@ public class Board extends JPanel implements ActionListener {
     //współrzędne
     private static final int[] x = new int[maxLength];
     private static final int[] y = new int[maxLength];
-    private static final int[] x2 = new int[maxLength];
-    private static final int[] y2 = new int[maxLength];
+    //private static final int[] x2 = new int[maxLength];
+    //private static final int[] y2 = new int[maxLength];
     private static final ArrayList<Integer> obstaclesX = new ArrayList<>();
     private static final ArrayList<Integer> obstaclesY = new ArrayList<>();
     //parametry mechanizmu gry
@@ -32,7 +30,7 @@ public class Board extends JPanel implements ActionListener {
     private static int boardSize;
     private static int dotSize;
     private static int randomRange;
-    private static int length = initialLength, lenght2 = 0;
+    private static int length = initialLength;//, lenght2 = 0;
     private static int delay = 30;
     private static int initialDelay = 30;
     private static int foodX, foodY, goldenX, goldenY, greenX, greenY, helmetX, helmetY;
@@ -52,14 +50,11 @@ public class Board extends JPanel implements ActionListener {
 
 
     /**
-     * W konstruktorze planszy przypisywane sa wartosci atrybutow.
-     * Poza tym, dodawany jest KeyListener do obslugi klawiatury
-     * i deklarowany Timer glownej petli gry. Tworzony jest takze
-     * watek generujacy losowe zdarzenia i wywolana jest metoda
-     * inicjalizujaca wszystkie grafiki zwiazane z gra.
+     * Sets attributes of the board, adds keyboard listener, declares main timer of the game.
+     * Creates random events thread, initializes all graphic files etc.
      *
-     * @param size   rozmiar planszy (wysokosc = szerokosc)
-     * @param window okno gry powolujace plansze
+     * @param size   board size (w = h)
+     * @param window window that the board is located in
      */
     public Board(int size, GameWindow window) {
         boardSize = size;
@@ -74,9 +69,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     /**
-     * Zatrzymuje przebieg gry, a wiec ustawia flage inGame
-     * oraz flagi kierunkow na false. zatrzymywany jest timer, watek
-     * losowych zdarzen i lewy panel stanu gry.
+     * Stops the game, sets the inGame flag to false, disables direction, stops the main timer and event thread.
      */
     public static void stopGame() {
         inGame = false;
@@ -90,8 +83,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     /**
-     * Metoda wstrzymuje przebieg gry, czyli ustawia flage pause,
-     * wstrzymuje watek losowych zdarzen i lewy panel stanu gry.
+     * Pauses the game, sets pause flag, pauses the random event thread and game state counter
      */
     public static void pauseGame() {
         pause = true;
@@ -130,17 +122,13 @@ public class Board extends JPanel implements ActionListener {
     }
 
     /**
-     * Resetuje stan gry, przywraca wartosci
-     * interwalu timera, dlugosci i caly waz zostaje umieszczony na
-     * srodku planszy. Ustawiane sa lokalizacje bonusow tak, by
-     * znajdowaly sie poza plansza. Usuwane sa przeszkody a ustawiona
-     * nowa lokalizacja czerwonego jablka. Timerowi przywraca sie poczatkowy
-     * interwal a lewy panel z aktualnym stanem gry jest resetowany.
+     * Resets the game state, timer delay, snake length. Places the snake in the middle of the board. Sets bonuses
+     * to be away from visible board. Deletes obstacles, sets new green apple location.
      */
     public void resetGame() {
         delay = initialDelay;
         length = initialLength;
-        lenght2 = 0;
+        //lenght2 = 0;
         for (int z = 0; z < length; z++) {
             x[z] = ((boardSize / dotSize) / 2) * dotSize;
             y[z] = ((boardSize / dotSize) / 2) * dotSize;
@@ -156,13 +144,11 @@ public class Board extends JPanel implements ActionListener {
     }
 
     /**
-     * Metoda powoduje rozpoczecie gry, a wiec ustawienie atrybutow
-     * zwiazanych z przeszkodami, scianami i poziomem trudnosci, stanem gry.
-     * Interwal timera uzalezniony jest od poziomu trudnosci.
+     * Starts the game
      *
-     * @param diff   poziom trudnosci
-     * @param check  czy gracz zaznaczyl pole "Przeszkody"
-     * @param check2 czy gracz zaznaczyl pole "Sciany"
+     * @param diff   difficulty level
+     * @param check  obstacles checkbox is checked
+     * @param check2 walls checkbox is checked
      */
     public void startGame(int diff, boolean check, boolean check2) {
         obstacles = check;
@@ -180,9 +166,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     /**
-     * Metoda wznawia gre, czyli wylacza flage pause, wznawia watek zdarzen
-     * i lewy panel. Dodatkowo w razie utraty focusu przez nacisniecie przycisku
-     * zostaje on przywrocony.
+     * Resumes the game
      */
     public void resumeGame() {
         pause = false;
@@ -192,13 +176,9 @@ public class Board extends JPanel implements ActionListener {
     }
 
     /**
-     * Glowna metoda przebiegu gry uruchamiana z kazdym tickiem
-     * timera. Jesli gra nie jest zapauzowana, uruchamia metody
-     * odpowiadajace za ruch, sprawdzanie bonusow i kolizji.
-     * Metoda także wylacza blokade nalozona na zmiane kierunku ruchu
-     * i wywoluje metode odmalowania calej planszy.
+     * Main timer listener responsible for repainting, moving the snake, checking collisions and food.
      *
-     * @param e zdarzenie wywolujace (w tym przypadku jeden tick timera)
+     * @param e timer tick event
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -221,14 +201,11 @@ public class Board extends JPanel implements ActionListener {
     }
 
     /**
-     * Ustawia lokalizacje nowego bonusu
+     * Sets location of new bonus
      *
-     * @param x         wspolrzedna x
-     * @param y         wspolrzedna y
-     * @param bonusType typ bonusu:
-     *                  0 - zlote
-     *                  1 - zielone
-     *                  2 - kask
+     * @param x         x-coordinate
+     * @param y         y-coordinate
+     * @param bonusType bonus type (0 - golden apple, 1 - green apple, 2 - helmet)
      */
     public void setBonus(int x, int y, int bonusType) {
         if (bonusType == 0) {
@@ -253,12 +230,12 @@ public class Board extends JPanel implements ActionListener {
             delay = (int) (0.95 * delay);
             mainTimer.setDelay(delay);
         }
-        if ((x2[0] == foodX) && (y2[0] == foodY)) {
+        /*if ((x2[0] == foodX) && (y2[0] == foodY)) {
             lenght2++;
             setFood();
             delay = (int) (0.95 * delay);
             mainTimer.setDelay(delay);
-        }
+        }*/
 
         //zlote jablko = 3 czerwone
         if ((x[0] == goldenX) && (y[0] == goldenY)) {
@@ -271,7 +248,7 @@ public class Board extends JPanel implements ActionListener {
             mainTimer.setDelay(delay);
             setBonus(-dotSize, -dotSize, 0);
         }
-        if ((x2[0] == goldenX) && (y2[0] == goldenY)) {
+        /*if ((x2[0] == goldenX) && (y2[0] == goldenY)) {
             lenght2 += 3;
             x2[lenght2 - 2] = x2[lenght2 - 3];
             y2[lenght2 - 2] = y2[lenght2 - 3];
@@ -280,22 +257,22 @@ public class Board extends JPanel implements ActionListener {
             delay = (int) (0.9 * delay);
             mainTimer.setDelay(delay);
             setBonus(-dotSize, -dotSize, 0);
-        }
+        }*/
 
-        /*
+
         //zielone jablko przyspiesza 3-krotnie na 3 sekundy
-        if ((x[0] == green_x) && (y[0] == green_y)) {
-            int oldDelay = DELAY;
-            DELAY /= 3;
-            timer.setDelay(DELAY);
+        if ((x[0] == greenX) && (y[0] == greenY)) {
+            int oldDelay = delay;
+            delay /= 3;
+            mainTimer.setDelay(delay);
             new Timer(3000, actionEvent -> {
-                DELAY = oldDelay;
-                timer.setDelay(DELAY);
+                delay = oldDelay;
+                mainTimer.setDelay(delay);
             }).start();
-            setGreen(-DOT_SIZE, -DOT_SIZE);
+            setBonus(-dotSize, -dotSize, 1);
         }
-        */
 
+/*
         //zielone jablko dzieli weza na dwa
         if ((x[0] == greenX) && (y[0] == greenY) && lenght2 == 0) {
             if (length % 2 != 0) length++;
@@ -312,23 +289,22 @@ public class Board extends JPanel implements ActionListener {
                 lenght2 = 0;
             }).start();
         }
-
+*/
         //kask
         if (((x[0] == helmetX) && (y[0] == helmetY))) {
             helmet = true;
             setBonus(-dotSize, -dotSize, 2);
         }
-        if (((x2[0] == helmetX) && (y2[0] == helmetY))) {
+        /*if (((x2[0] == helmetX) && (y2[0] == helmetY))) {
             helmet = true;
             setBonus(-dotSize, -dotSize, 2);
-        }
+        }*/
     }
 
     /**
-     * Powoduje odmalowanie calej planszy, czyli jablka, bonusow,
-     * ogona i glowy weza i przeszkod.
+     * Repaints board, snake, bonuses etc
      *
-     * @param g2 srodowisko graficzne
+     * @param g2 graphical environment
      */
     @Override
     public void paintComponent(Graphics g2) {
@@ -343,47 +319,47 @@ public class Board extends JPanel implements ActionListener {
             for (int z = 1; z < length; z++) {
                 g.drawImage(img, x[z], y[z], this);
             }
-            for (int z = 1; z < lenght2; z++) {
-                g.drawImage(img, x2[z], y2[z], this);
-            }
+            //for (int z = 1; z < lenght2; z++) {
+            //    g.drawImage(img, x2[z], y2[z], this);
+            //}
 
             if (up) {
                 img = headUp;
                 g.drawImage(img, x[0], y[0] - dotSize / 5, this);
-                if (lenght2 > 0) g.drawImage(img, x2[0], y2[0] - dotSize / 5, this);
+                //if (lenght2 > 0) g.drawImage(img, x2[0], y2[0] - dotSize / 5, this);
                 if (helmet) {
                     g.drawImage(helmetDown, x[0] - dotSize / 5, y[0], this);
-                    if (lenght2 > 0) g.drawImage(helmetDown, x2[0] - dotSize / 5, y2[0], this);
+                    //if (lenght2 > 0) g.drawImage(helmetDown, x2[0] - dotSize / 5, y2[0], this);
                 }
 
             } else if (right) {
                 img = headRight;
                 g.drawImage(img, x[0], y[0], this);
-                if (lenght2 > 0) g.drawImage(img, x2[0], y2[0], this);
+                //if (lenght2 > 0) g.drawImage(img, x2[0], y2[0], this);
                 if (helmet) {
                     g.drawImage(helmetLeft, x[0], y[0] - dotSize / 5, this);
-                    if (lenght2 > 0) g.drawImage(helmetLeft, x2[0], y2[0] - dotSize / 5, this);
+                    //if (lenght2 > 0) g.drawImage(helmetLeft, x2[0], y2[0] - dotSize / 5, this);
                 }
             } else if (down) {
                 img = headDown;
                 g.drawImage(img, x[0], y[0], this);
-                if (lenght2 > 0) g.drawImage(img, x2[0], y2[0], this);
+                //if (lenght2 > 0) g.drawImage(img, x2[0], y2[0], this);
                 if (helmet) {
                     g.drawImage(helmetUp, x[0] - dotSize / 5, y[0], this);
-                    if (lenght2 > 0) g.drawImage(helmetUp, x2[0] - dotSize / 5, y2[0], this);
+                    //if (lenght2 > 0) g.drawImage(helmetUp, x2[0] - dotSize / 5, y2[0], this);
                 }
             } else if (left) {
                 img = headLeft;
                 g.drawImage(img, x[0] - dotSize / 5, y[0], this);
-                if (lenght2 > 0) g.drawImage(img, x2[0] - dotSize / 5, y2[0], this);
+                //if (lenght2 > 0) g.drawImage(img, x2[0] - dotSize / 5, y2[0], this);
                 if (helmet) {
                     g.drawImage(helmetRight, x[0], y[0] - dotSize / 5, this);
-                    if (lenght2 > 0) g.drawImage(helmetRight, x2[0], y2[0] - dotSize / 5, this);
+                    //if (lenght2 > 0) g.drawImage(helmetRight, x2[0], y2[0] - dotSize / 5, this);
                 }
             } else {
                 img = headUp;
                 g.drawImage(img, x[0], y[0] - dotSize / 5, this);
-                if (lenght2 > 0) g.drawImage(img, x2[0], y2[0] - dotSize / 5, this);
+                //if (lenght2 > 0) g.drawImage(img, x2[0], y2[0] - dotSize / 5, this);
             }
 
             for (int i = 0; i < obstaclesX.size(); i++) {
@@ -400,26 +376,26 @@ public class Board extends JPanel implements ActionListener {
         for (int z = length; z > 0; z--) {
             x[z] = x[(z - 1)];
             y[z] = y[(z - 1)];
-            x2[z] = x2[(z - 1)];
-            y2[z] = y2[(z - 1)];
+            //x2[z] = x2[(z - 1)];
+            //y2[z] = y2[(z - 1)];
         }
 
         for (int i = 0; i < dotSize; i++) {
             if (left) {
                 x[0] -= 1;
-                x2[0] -= 1;
+                //x2[0] -= 1;
             }
             if (right) {
                 x[0] += 1;
-                x2[0] += 1;
+                //x2[0] += 1;
             }
             if (up) {
                 y[0] -= 1;
-                y2[0] -= 1;
+                //y2[0] -= 1;
             }
             if (down) {
                 y[0] += 1;
-                y2[0] += 1;
+                //y2[0] += 1;
             }
         }
     }
@@ -427,15 +403,15 @@ public class Board extends JPanel implements ActionListener {
     @SuppressWarnings("SuspiciousListRemoveInLoop")
     private void checkCollision() {
 
-        if (lenght2 == 0) {
-            for (int z = length; z > 0; z--) {
-                if ((z > initialLength) && ((x[0] == x[z]) && (y[0] == y[z]))) {
-                    stopGame();
-                    gameWindow.getEngine().showGameOver(length - 3, 0);
-                    return;
-                }
+        //if (lenght2 == 0) {
+        for (int z = length; z > 0; z--) {
+            if ((z > initialLength) && ((x[0] == x[z]) && (y[0] == y[z]))) {
+                stopGame();
+                gameWindow.getEngine().showGameOver(length - 3, 0);
+                return;
             }
         }
+        //}
 
 
         if (walls) {
@@ -465,16 +441,16 @@ public class Board extends JPanel implements ActionListener {
                 if (x[z] < 0) x[z] += boardSize;
                 if (y[z] < 0) y[z] += boardSize;
             }
-            for (int z = lenght2; z >= 0; z--) {
+            /*for (int z = lenght2; z >= 0; z--) {
                 if (x2[z] >= boardSize) x2[z] %= boardSize;
                 if (y2[z] >= boardSize) y2[z] %= boardSize;
                 if (x2[z] < 0) x2[z] += boardSize;
                 if (y2[z] < 0) y2[z] += boardSize;
-            }
+            }*/
         }
 
         for (int i = 0; i < obstaclesX.size(); i++) {
-            if (((x[0] == obstaclesX.get(i)) && (y[0] == obstaclesY.get(i))) || ((x2[0] == obstaclesX.get(i)) && (y2[0] == obstaclesY.get(i)))) {
+            if (((x[0] == obstaclesX.get(i)) && (y[0] == obstaclesY.get(i))) /*|| ((x2[0] == obstaclesX.get(i)) && (y2[0] == obstaclesY.get(i)))*/) {
                 if (!helmet) {
                     stopGame();
                     gameWindow.getEngine().showGameOver(length - 3, 2);
@@ -489,18 +465,18 @@ public class Board extends JPanel implements ActionListener {
     }
 
     /**
-     * Metoda zwraca aktualna liczbe punktow
+     * returns current score
      *
-     * @return wynik
+     * @return score
      */
     public int getScore() {
         return length - 3;
     }
 
     /**
-     * Metoda zwraca nazwe poziomu trudnosci
+     * returns current difficulty level
      *
-     * @return poziom trudnosci
+     * @return difficulty level
      */
     public String getDiff() {
         switch (difficulty) {
@@ -519,10 +495,9 @@ public class Board extends JPanel implements ActionListener {
         long pressed = 0;
 
         /**
-         * Metoda ustawia kierunek ruchu w zaleznosci od
-         * wcisnietego klawisza
+         * Sets direction depending on pressed key and speeds up if holding the key
          *
-         * @param e zdarzenie zwiazane z wcisnieciem klawisza
+         * @param e key pressed event
          */
         @Override
         public void keyPressed(KeyEvent e) {
@@ -568,9 +543,9 @@ public class Board extends JPanel implements ActionListener {
         }
 
         /**
-         * Metoda wywolywana po zwolnieniu klawisza
+         * resets the speed after releasing the key
          *
-         * @param e zdarzenie zwiazane ze zwolnieniem klawisza
+         * @param e key released event
          */
         public void keyReleased(KeyEvent e) {
             pressed = 0;

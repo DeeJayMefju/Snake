@@ -6,13 +6,14 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Przełącznik sformatowany
+ * Custom radio button
  */
 public class UIRadioButton extends JRadioButton {
     /**
      * Ustawienie parametrow wygladu przycisku Radio
+     * Creates new UIRadioButton and sets its visual params.
      *
-     * @param text tekst obok przycisku
+     * @param text label to display next to the radio button
      */
     public UIRadioButton(String text) {
 

@@ -6,13 +6,13 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Pole wyboru
+ * Custom checkbox
  */
 public class UICheckBox extends JCheckBox {
     /**
-     * Ustawienie parametrow pola checkbox
+     * Creates new instance of UICheckBox and sets its visual properties
      *
-     * @param text tekst przy polu zaznaczenia
+     * @param text text of the label displayed next to the checkbox
      */
     public UICheckBox(String text) {
         setText(text);

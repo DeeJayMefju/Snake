@@ -5,7 +5,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 /**
- * Główne okno gry
+ * Main game window
  */
 public class GameWindow extends JFrame {
     private static Board board;
@@ -14,13 +14,12 @@ public class GameWindow extends JFrame {
     private static GameEngine engine;
 
     /**
-     * W konstruktorze okna gry sa ustawiane parametry tego okna.
-     * Obliczane sa proporcje ekranu a rozmiar okna gry jest zawsze w
-     * proporcjach 16:9, ale zmaksymalizowany poziomo lub pionowo.
-     * Tworzona jest takze plansza i dwa panele boczne wraz z ich
-     * parametrami.
+     * Creates new instance of GameWindow, sets parameters of window.
+     * Calculates screen proportions and window size is set to 16:9
+     * maximized vertically or horizontally.
+     * Creates the board and side panels with their properties.
      *
-     * @param parent silnik gry powolujacy okno
+     * @param parent GameEngine that generates the window
      */
     @SuppressWarnings("SuspiciousNameCombination")
     public GameWindow(GameEngine parent) {
@@ -65,59 +64,59 @@ public class GameWindow extends JFrame {
     }
 
     /**
-     * zwraca prawy panel okna
+     * returns right panel
      *
-     * @return prawy panel
+     * @return right panel
      */
     public JPanel getRight() {
         return right;
     }
 
     /**
-     * Zwraca lewy panel okna
+     * Returns left panel
      *
-     * @return lewy panel
+     * @return left panel
      */
     public Panel getLeft() {
         return left;
     }
 
     /**
-     * przekazuje polecenie rozpoczecia gry z silnika do planszy
+     * Passes the starting event from engine to the board.
      *
-     * @param diff       poziom trudnosci
-     * @param przeszkody czy maja byc generowane przeszkody
-     * @param sciany     czy maja byc generowane sciany
+     * @param diff      difficulty level
+     * @param obstacles generation of obstacles
+     * @param walls     generation of walls
      */
-    public void startGame(int diff, boolean przeszkody, boolean sciany) {
-        board.startGame(diff, przeszkody, sciany);
+    public void startGame(int diff, boolean obstacles, boolean walls) {
+        board.startGame(diff, obstacles, walls);
     }
 
     /**
-     * przekazuje polecenie wstrzymania gry z silnika do planszy
+     * passes pause event to the board
      */
     public void pauseGame() {
         Board.pauseGame();
     }
 
     /**
-     * przekazuje polecenie wznowienia gry z silnika do planszy
+     * passes resume event to the board
      */
     public void resumeGame() {
         board.resumeGame();
     }
 
     /**
-     * przekazuje polecenie zakonczenia gry z silnika do planszy
+     * passes stop event to the board
      */
     public void stopGame() {
         Board.stopGame();
     }
 
     /**
-     * Zwraca instancje silnika gry, ktory powolal okno
+     * Returns the instance of GameEngine that created the window
      *
-     * @return silnik
+     * @return Game engine
      */
     public GameEngine getEngine() {
         return engine;

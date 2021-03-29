@@ -4,7 +4,7 @@ This game is my own implementation of very well known game from old mobile phone
 It uses Java Swing to create graphics, threads to update game state, repaint graphics and generate bonus events.<br>
 The game has three difficulty levels and allows to set walls and obstacles on/off. 
 <h3>Bonuses</h3>
- <b>red apple</b> increases length by 1 and gives 1 score point.
-- green apple - speeds up the snake for a few seconds<br>
-- golden apple - works like three red apples<br>
-- helmet - allows to break one obstacle, doesn't work for walls.<br>
+<b>- red apple</b> increases length by 1 and gives 1 score point.
+<b>- green apple</b> speeds up the snake for a few seconds<br>
+<b>- golden apple</b> works like three red apples<br>
+<b>- helmet</b> allows to break one obstacle, doesn't work for walls.<br>
